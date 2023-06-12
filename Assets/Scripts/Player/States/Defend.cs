@@ -1,59 +1,63 @@
+using StateMachineNamespace;
 using UnityEngine;
-
-public class Defend : State
+namespace Player.States
 {
-    private PlayerController controller;
-
-    public Defend(PlayerController controller) : base("Defend")
+    public class Defend : State
     {
-        this.controller = controller;
-    }
+        private PlayerController controller;
 
-    public override void Enter()
-    {
-        base.Enter();
+        public Defend(PlayerController controller) : base("Defend")
+        {
+            this.controller = controller;
+        }
 
-        // Toggle animator
-        controller.thisAnimator.SetBool("bDefend",true);
+        public override void Enter()
+        {
+            base.Enter();
 
-        // Toggle hitbox
-        controller.shieldHitbox.SetActive(true);
-    }
+            // Toggle animator
+            controller.thisAnimator.SetBool("bDefend", true);
 
-    public override void Exit()
-    {
-        base.Exit();
+            // Toggle hitbox
+            controller.shieldHitbox.SetActive(true);
+        }
 
-         // Toggle animator
-        controller.thisAnimator.SetBool("bDefend",false);
+        public override void Exit()
+        {
+            base.Exit();
 
-        // Toggle hitbox
-        controller.shieldHitbox.SetActive(false);
-    }
+            // Toggle animator
+            controller.thisAnimator.SetBool("bDefend", false);
 
-    public override void Update()
-    {
-        base.Update();
+            // Toggle hitbox
+            controller.shieldHitbox.SetActive(false);
+        }
 
-        // Switch to Idle
-        if(!controller.hasDefenseInput){
-            controller.stateMachine.ChangeState(controller.idleState);
-            return;
+        public override void Update()
+        {
+            base.Update();
+
+            // Switch to Idle
+            if (!controller.hasDefenseInput)
+            {
+                controller.stateMachine.ChangeState(controller.idleState);
+                return;
+            }
+
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            //Look Rotation
+            controller.RotateBodyToFaceInput(1f);
+        }
+
+        public override void LateUpdate()
+        {
+            base.LateUpdate();
         }
 
     }
-
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        //Look Rotation
-            controller.RotateBodyToFaceInput(1f);
-    }
-
-    public override void LateUpdate()
-    {
-        base.LateUpdate();
-    }
-
 }

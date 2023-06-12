@@ -1,38 +1,41 @@
+using StateMachineNamespace;
 using UnityEngine;
-
-public class Dead : State
+namespace Player.States
 {
-    private PlayerController controller;
-
-    public Dead(PlayerController controller) : base("Dead")
+    public class Dead : State
     {
-        this.controller = controller;
-    }
+        private PlayerController controller;
 
-    public override void Enter()
-    {
-        base.Enter();
-        controller.thisAnimator.SetTrigger("tGameOver");
-    }
+        public Dead(PlayerController controller) : base("Dead")
+        {
+            this.controller = controller;
+        }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+        public override void Enter()
+        {
+            base.Enter();
+            controller.thisAnimator.SetTrigger("tGameOver");
+        }
 
-    public override void Update()
-    {
-        base.Update();
-    }
+        public override void Exit()
+        {
+            base.Exit();
+        }
 
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
+        public override void Update()
+        {
+            base.Update();
+        }
 
-    public override void LateUpdate()
-    {
-        base.LateUpdate();
-    }
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
 
+        public override void LateUpdate()
+        {
+            base.LateUpdate();
+        }
+
+    }
 }

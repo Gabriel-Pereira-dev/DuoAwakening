@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,11 +10,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [HideInInspector] public static readonly string KEY_SELECTED_CHARACTER_INDEX = "SelectedCharacterIndex";
 
-
-
-
     [Header("Physics")]
     [SerializeField] public LayerMask groundLayer;
+
+    public GameObject player;
 
     // [Header("Character")]
     // public int selectedCharacterIndex;

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using EventArgs;
+using Player.States;
+using StateMachineNamespace;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   
+
     // State Machine
     [HideInInspector] public StateMachine stateMachine;
     [HideInInspector] public Idle idleState;
@@ -29,18 +32,18 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10f;
     [HideInInspector] public Vector2 movementVector;
 
-     // Jump
+    // Jump
     [Header("Jump")]
     public float jumpPower = 10f;
     [Range(0f, 1f)] public float jumpMovementFactor = 1f;
     [HideInInspector] public bool hasJumpInput;
     public AudioClip jumpSound;
-    
+
     // Slope
     [Header("Slope")]
     public float maxSlopeAngle = 45f;
-    [HideInInspector]public bool isOnSlope;
-    [HideInInspector]public Vector3 slopeNormal;
+    [HideInInspector] public bool isOnSlope;
+    [HideInInspector] public Vector3 slopeNormal;
     // Attack
     [Header("Attack")]
     public int attackStages;
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
     public List<float> attackStageImpulse = new List<float>();
     public GameObject swordHitbox;
     public float swordKnockbackImpulse = 10f;
+    public List<int> attackDamageByStage;
 
     [Header("Defend")]
     public GameObject shieldHitbox;
@@ -61,6 +65,16 @@ public class PlayerController : MonoBehaviour
         thisCollider = GetComponent<Collider>();
         thisAnimator = GetComponent<Animator>();
         thisAudioSource = GetComponent<AudioSource>();
+        LifeScript lifeScript = GetComponent<LifeScript>();
+        if (lifeScript != null)
+        {
+            lifeScript.OnDamage += OnDamage;
+        }
+    }
+
+    private void OnDamage(object sender, DamageEventArgs args)
+    {
+        Debug.Log("Hitting" + gameObject.name);
     }
 
     void Start()
@@ -93,7 +107,7 @@ public class PlayerController : MonoBehaviour
         hasJumpInput = Input.GetKey(KeyCode.Space);
 
         // Check defense input
-        hasDefenseInput =  Input.GetKey(KeyCode.X);
+        hasDefenseInput = Input.GetKey(KeyCode.X);
 
         //P Passar a velocidade de 0 a 1 pro Animator Controller
         float velocity = thisRigidbody.velocity.magnitude;
@@ -116,7 +130,7 @@ public class PlayerController : MonoBehaviour
     {
         // Apply Gravity
         Vector3 gravityForce = Physics.gravity * (isOnSlope ? 0.25f : 1);
-        thisRigidbody.AddForce(gravityForce,ForceMode.Acceleration);
+        thisRigidbody.AddForce(gravityForce, ForceMode.Acceleration);
         // Limit Speed
         LimitSpeed();
 
@@ -124,27 +138,48 @@ public class PlayerController : MonoBehaviour
         stateMachine.FixedUpdate();
     }
 
-    public void OnSwordCollisionEnter(Collider other){
+    public void OnSwordCollisionEnter(Collider other)
+    {
         var otherObject = other.gameObject;
-        var otherRigidbody =  otherObject.GetComponent<Rigidbody>();
-        var isTarget = otherObject.layer == LayerMask.NameToLayer("Target");
-        if(isTarget && otherRigidbody != null){
-            var positionDif = otherObject.transform.position - gameObject.transform.position;
-            var impulseVector = new Vector3(positionDif.normalized.x,0,positionDif.normalized.z);
-            impulseVector*= swordKnockbackImpulse;
-            otherRigidbody.AddForce(impulseVector,ForceMode.Impulse);
+        var otherRigidbody = otherObject.GetComponent<Rigidbody>();
+        var otherLife = otherObject.GetComponent<LifeScript>();
+
+        int bit = 1 << otherObject.layer;
+        int mask = LayerMask.GetMask("Target", "Creatures");
+        bool isTargetOrCreature = (bit & mask) == bit;
+
+        if (isTargetOrCreature)
+        {
+            //Knockback
+            if (otherRigidbody != null)
+            {
+                var positionDif = otherObject.transform.position - gameObject.transform.position;
+                var impulseVector = new Vector3(positionDif.normalized.x, 0, positionDif.normalized.z);
+                impulseVector *= swordKnockbackImpulse;
+                otherRigidbody.AddForce(impulseVector, ForceMode.Impulse);
+            }
+            // Life
+
+            if (otherLife != null)
+            {
+                Debug.Log("Inflict Damage to " + otherObject.name);
+                var damage = attackDamageByStage[attackState.stage - 1];
+                otherLife.InflictDamage(gameObject, damage);
+            }
         }
     }
 
-    public void OnShieldCollisionEnter(Collider other){
+    public void OnShieldCollisionEnter(Collider other)
+    {
         var otherObject = other.gameObject;
-        var otherRigidbody =  otherObject.GetComponent<Rigidbody>();
+        var otherRigidbody = otherObject.GetComponent<Rigidbody>();
         var isTarget = true;
-        if(isTarget && otherRigidbody != null){
+        if (isTarget && otherRigidbody != null)
+        {
             var positionDif = otherObject.transform.position - gameObject.transform.position;
-            var impulseVector = new Vector3(positionDif.normalized.x,0,positionDif.normalized.z);
-            impulseVector*= shieldKnockbackImpulse;
-            otherRigidbody.AddForce(impulseVector,ForceMode.Impulse);
+            var impulseVector = new Vector3(positionDif.normalized.x, 0, positionDif.normalized.z);
+            impulseVector *= shieldKnockbackImpulse;
+            otherRigidbody.AddForce(impulseVector, ForceMode.Impulse);
         }
     }
 
@@ -170,11 +205,14 @@ public class PlayerController : MonoBehaviour
         thisRigidbody.MoveRotation(newRotation);
     }
 
-    public bool AttemptToAttack(){
-        if(Input.GetKeyDown(KeyCode.Z)){
+    public bool AttemptToAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
             bool isAttacking = stateMachine.currentStateName == attackState.name;
             bool canAttack = !isAttacking || attackState.CanSwitchStages();
-            if(canAttack){
+            if (canAttack)
+            {
                 var attackStage = isAttacking ? attackState.stage + 1 : 1;
                 attackState.stage = attackStage;
                 stateMachine.ChangeState(attackState);
@@ -194,35 +232,39 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = Vector3.down;
         float maxDistance = 0.1f;
         LayerMask groundLayer = GameManager.Instance.groundLayer;
-        if(Physics.Raycast(origin,direction,maxDistance,groundLayer)){
+        if (Physics.Raycast(origin, direction, maxDistance, groundLayer))
+        {
             isGrounded = true;
         }
     }
 
     private void DetectSlope()
-    {   
+    {
         //ResetSlope
         isOnSlope = false;
         slopeNormal = Vector3.zero;
 
-         // Detect on slope
+        // Detect on slope
         Vector3 origin = transform.position;
         Vector3 direction = Vector3.down;
         float maxDistance = 0.2f;
-        if(Physics.Raycast(origin,direction,out var slopeHitInfo,maxDistance)){
+        if (Physics.Raycast(origin, direction, out var slopeHitInfo, maxDistance))
+        {
 
-            float angle = Vector3.Angle(Vector3.up,slopeHitInfo.normal);
+            float angle = Vector3.Angle(Vector3.up, slopeHitInfo.normal);
             isOnSlope = angle < maxSlopeAngle && angle != 0;
             slopeNormal = isOnSlope ? slopeHitInfo.normal : Vector3.zero;
-            
+
         }
     }
 
-    private void LimitSpeed(){
-        Vector3 flatVelocity = new Vector3(thisRigidbody.velocity.x,0,thisRigidbody.velocity.z);
-        if(flatVelocity.magnitude > maxSpeed){
+    private void LimitSpeed()
+    {
+        Vector3 flatVelocity = new Vector3(thisRigidbody.velocity.x, 0, thisRigidbody.velocity.z);
+        if (flatVelocity.magnitude > maxSpeed)
+        {
             Vector3 limitedVelocity = flatVelocity.normalized * maxSpeed;
-            thisRigidbody.velocity = new Vector3(limitedVelocity.x,thisRigidbody.velocity.y,limitedVelocity.z);
+            thisRigidbody.velocity = new Vector3(limitedVelocity.x, thisRigidbody.velocity.y, limitedVelocity.z);
         }
     }
     void OnDrawGizmos()
