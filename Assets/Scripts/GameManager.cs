@@ -10,10 +10,22 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [HideInInspector] public static readonly string KEY_SELECTED_CHARACTER_INDEX = "SelectedCharacterIndex";
 
+    //Interaction
+    [SerializeField] public List<Interaction> interactionList;
+    public GameObject player;
+
+    //Rendering
+    [Header("Rendering")]
+    [SerializeField] public Camera worldUiCamera;
+
+    //Physics
     [Header("Physics")]
     [SerializeField] public LayerMask groundLayer;
 
-    public GameObject player;
+    [Header("Inventory")]
+    public int keys;
+    public bool hasBossKey;
+
 
     // [Header("Character")]
     // public int selectedCharacterIndex;
@@ -54,5 +66,6 @@ public class GameManager : MonoBehaviour
     //     characterName = prefab.name;
 
     // }
+
 
 }

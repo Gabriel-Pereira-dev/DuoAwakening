@@ -80,6 +80,10 @@ public class MeeleeCreatureController : MonoBehaviour
     {
         stateMachine.Update();
         currentState = stateMachine.currentStateName;
+
+        //Update anim velocity
+        var velocityRate = thisAgent.velocity.magnitude / thisAgent.speed;
+        thisAnimator.SetFloat("fVelocity", velocityRate);
     }
 
     void FixedUpdate()

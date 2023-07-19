@@ -1,0 +1,101 @@
+using System.Collections;
+using StateMachineNamespace;
+using UnityEngine;
+
+namespace Behaviors.LichBoss.States
+{
+    public class AttackRitual : State
+    {
+        private LichBossController controller;
+        private LichBossHelper helper;
+
+        private float endAttackRitualCooldown;
+        private IEnumerator attackRitualCoroutine;
+        public AttackRitual(LichBossController controller) : base("AttackRitual")
+        {
+            this.controller = controller;
+            helper = this.controller.helper;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            // Set variables
+            endAttackRitualCooldown = controller.attackRitualDuration;
+            controller.thisAnimator.SetTrigger("tAttackRitual");
+            // Schedule AttackRitual
+            attackRitualCoroutine = ScheduleRitualAttack();
+            controller.StartCoroutine(ScheduleRitualAttack());
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            // Cancel attack
+            if (attackRitualCoroutine != null)
+            {
+                controller.StopCoroutine(attackRitualCoroutine);
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if ((endAttackRitualCooldown -= Time.deltaTime) <= 0)
+            {
+                controller.stateMachine.ChangeState(controller.idleState);
+            }
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
+
+        public override void LateUpdate()
+        {
+            base.LateUpdate();
+        }
+
+        private IEnumerator ScheduleRitualAttack()
+        {
+            yield return new WaitForSeconds(controller.attackRitualDelay);
+            PerformAttack();
+        }
+        private void PerformAttack()
+        {
+            var origin = controller.transform.position;
+            var playerPosition = GameManager.Instance.player.transform.position;
+            var direction = controller.transform.rotation * Vector3.forward;
+            //     var radius = controller.attackRadius;
+            //     var maxDistance = controller.attackSphereRadius;
+
+            //     var attackPosition = origin + direction * radius;
+            //     var layerMask = LayerMask.GetMask("Player");
+            //     // attack radius sphere cast
+            //     Collider[] colliders = Physics.OverlapSphere(attackPosition, maxDistance, layerMask);
+
+            //     foreach (var collider in colliders)
+            //     {
+            //         var hitObject = collider.gameObject;
+
+            //         var hitLifeScript = hitObject.GetComponent<LifeScript>();
+
+            //         if (hitLifeScript != null)
+            //         {
+            //             var attacker = controller.gameObject;
+            //             var attackDamage = controller.attackDamage;
+            //             hitLifeScript.InflictDamage(attacker, attackDamage);
+            //         }
+
+            //     }
+
+
+
+        }
+    }
+}
+
