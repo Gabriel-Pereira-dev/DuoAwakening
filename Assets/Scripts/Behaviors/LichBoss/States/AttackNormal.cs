@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Projectiles;
 using StateMachineNamespace;
 using UnityEngine;
 
@@ -10,7 +12,6 @@ namespace Behaviors.LichBoss.States
         private LichBossHelper helper;
 
         private float endAttackNormalCooldown;
-        private IEnumerator attackNormalCoroutine;
         public AttackNormal(LichBossController controller) : base("AttackNormal")
         {
             this.controller = controller;
@@ -25,19 +26,13 @@ namespace Behaviors.LichBoss.States
             endAttackNormalCooldown = controller.attackNormalDuration;
             controller.thisAnimator.SetTrigger("tAttackNormal");
             // Schedule AttackNormal
-            attackNormalCoroutine = ScheduleAttackNormal();
-            controller.StartCoroutine(ScheduleAttackNormal());
+            helper.StartStateCoroutine(ScheduleAttackNormal(controller.attackNormalDelay));
         }
 
         public override void Exit()
         {
             base.Exit();
-
-            // Cancel attack
-            if (attackNormalCoroutine != null)
-            {
-                controller.StopCoroutine(attackNormalCoroutine);
-            }
+            helper.ClearStateCoroutines();
         }
 
         public override void Update()
@@ -60,40 +55,48 @@ namespace Behaviors.LichBoss.States
             base.LateUpdate();
         }
 
-        private IEnumerator ScheduleAttackNormal()
+        private IEnumerator ScheduleAttackNormal(float delay)
         {
-            yield return new WaitForSeconds(controller.attackNormalDelay);
-            PerformAttackNormal();
+            yield return new WaitForSeconds(delay);
+            
+            Debug.Log("Atacou NORMAL");
+            
+            //Get prefab
+            List<GameObject> prefabs = new List<GameObject>(){controller.fireballPrefab,controller.energyballPrefab};
+            var prefab =prefabs[Random.Range(0, prefabs.Count)];
+            
+            //Create Object
+            var spawnTransform = controller.staffTop;
+            var rotation = spawnTransform.rotation;
+            var position = spawnTransform.position;
+            var projectile = Object.Instantiate(prefab, position,
+                rotation);
+            
+            // Populate Projectile Collision
+            var projectileCollision = projectile.GetComponent<ProjectileCollision>();
+            projectileCollision.attacker = controller.gameObject;
+            projectileCollision.damage = controller.attackDamage;
+            
+            //Get Stuff
+            var aimOffset = controller.aimOffset;
+            var player = GameManager.Instance.player;
+            var projectileRigidbody = projectile.GetComponent<Rigidbody>();
+            
+            //Apply Impulse
+            var vectorToPlayer = ((player.transform.position + aimOffset) - position).normalized;
+            var forceVector = rotation * Vector3.forward;
+            forceVector = new Vector3(forceVector.x, vectorToPlayer.y, forceVector.z);
+            forceVector *= controller.attackNormalImpulse;
+            projectileRigidbody.AddForce(forceVector,ForceMode.Impulse);
+
+            
+            
+            Object.Destroy(projectile,30f);
         }
-        private void PerformAttackNormal()
-        {
-            var origin = controller.transform.position;
-            var playerPosition = GameManager.Instance.player.transform.position;
-            var direction = controller.transform.rotation * Vector3.forward;
-            // var radius = controller.attackRadius;
-            // var maxDistance = controller.attackSphereRadius;
+           
+        
 
-            // var attackPosition = origin + direction * radius;
-            // var layerMask = LayerMask.GetMask("Player");
-            // // attack radius sphere cast
-            // Collider[] colliders = Physics.OverlapSphere(attackPosition, maxDistance, layerMask);
-
-            // foreach (var collider in colliders)
-            // {
-            //     var hitObject = collider.gameObject;
-
-            //     var hitLifeScript = hitObject.GetComponent<LifeScript>();
-
-            //     if (hitLifeScript != null)
-            //     {
-            //         var attacker = controller.gameObject;
-            //         var attackDamage = controller.attackDamage;
-            //         hitLifeScript.InflictDamage(attacker, attackDamage);
-            //     }
-
-            // }
-
-        }
     }
 }
+
 

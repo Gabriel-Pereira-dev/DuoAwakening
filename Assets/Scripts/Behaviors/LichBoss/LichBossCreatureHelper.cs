@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Behaviors.LichBoss
@@ -20,6 +21,7 @@ namespace Behaviors.LichBoss
             var positionDifference = playerTransformPosition - origin;
             var distance = positionDifference.magnitude;
             return distance;
+            
         }
 
         public bool HasLowHealth()
@@ -29,5 +31,19 @@ namespace Behaviors.LichBoss
             return lifeRate <= controller.lowHealthThreshold;
         }
 
+        public void StartStateCoroutine(IEnumerator enumerator)
+        {
+            controller.StartCoroutine(enumerator);
+            controller.stateCoroutines.Add(enumerator);
+        }
+        
+        public void ClearStateCoroutines()
+        {
+            foreach (var enumerator in controller.stateCoroutines)
+            {
+                controller.StopCoroutine(enumerator);
+            }
+            controller.stateCoroutines.Clear();
+        }
     }
 }

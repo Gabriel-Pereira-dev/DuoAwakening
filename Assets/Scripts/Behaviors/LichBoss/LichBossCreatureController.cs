@@ -33,13 +33,21 @@ namespace Behaviors.LichBoss
 
         [Header("General")]
         public float lowHealthThreshold = 0.4f;
+        public Transform staffTop;
+        public Transform staffBottom;
         [Header("Idle")]
         public float idleDuration = 0.3f;
         [Header("Follow")]
         public float ceaseFollowInterval = 4f;
+        
+        [Header("Attack")]
+        public int attackDamage = 1;
+        public Vector3 aimOffset = new Vector3(0, 1.4f, 0);
+        
         [Header("Attack Normal")]
         public float attackNormalDelay = 0f;
         public float attackNormalDuration = 0f;
+        public float attackNormalImpulse = 10f;
 
         [Header("Attack Ritual")]
         public float distanceToRitual = 2.5f;
@@ -49,13 +57,20 @@ namespace Behaviors.LichBoss
 
         public float attackSuperDelay = 0f;
         public float attackSuperDuration = 1f;
+        public float attackSuperMagicDuration = 1f;
         public int attackSuperCount = 5;
-
-
-        public int attackDamage = 1;
+        public float attackSuperImpulse = 10f;
 
         [Header("Hurt")]
         public float hurtDuration = 0.5f;
+
+        [Header("Magic")]
+        public GameObject fireballPrefab;
+        public GameObject energyballPrefab;
+        public GameObject ritualPrefab;
+        
+        // State Coroutines
+        [HideInInspector] public List<IEnumerator> stateCoroutines = new();
 
 
         void Awake()
@@ -66,6 +81,7 @@ namespace Behaviors.LichBoss
             thisAnimator = GetComponent<Animator>();
             // Helper
             helper = new LichBossHelper(this);
+            
         }
 
         void Start()
@@ -99,8 +115,20 @@ namespace Behaviors.LichBoss
             currentState = stateMachine.currentStateName;
 
             //Update anim velocity
-            // var velocityRate = thisAgent.velocity.magnitude / thisAgent.speed;
-            // thisAnimator.SetFloat("fVelocity", velocityRate);
+            var velocityRate = thisAgent.velocity.magnitude / thisAgent.speed;
+            thisAnimator.SetFloat("fVelocity", velocityRate);
+            
+            // Face player
+            if (!thisLife.IsDead())
+            {
+                var player = GameManager.Instance.player;
+                var vecToPlayer = player.transform.position - transform.position;
+                vecToPlayer.y = 0;
+                vecToPlayer.Normalize();
+                var desiredRotation = Quaternion.LookRotation(vecToPlayer);
+                var newRotation = Quaternion.LerpUnclamped(transform.rotation, desiredRotation, 0.2f);
+                transform.rotation = newRotation;
+            }
         }
 
         void FixedUpdate()

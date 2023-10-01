@@ -11,6 +11,7 @@ public class LifeScript : MonoBehaviour
     // [HideInInspector] 
     public int health;
     public bool isVulnerable;
+    
 
     public GameObject healingPrefab;
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class LifeScript : MonoBehaviour
     {
         health = maxHealth;
         isVulnerable = true;
+        
     }
 
     public void InflictDamage(GameObject attacker, int damage)

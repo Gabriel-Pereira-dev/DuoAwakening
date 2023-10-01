@@ -15,56 +15,56 @@ namespace Behaviors.LichBoss.States
             helper = this.controller.helper;
         }
 
-        //     public override void Enter()
-        //     {
-        //         base.Enter();
-        //         //Reset
-        //         timePassed = 0f;
+        public override void Enter()
+        {
+            base.Enter();
+            //Reset
+            timePassed = 0f;
 
-        //         // Pause Damage
-        //         controller.thisLife.isVulnerable = false;
-        //         controller.thisAnimator.SetTrigger("tHurt");
-        //     }
+            // Pause Damage
+            controller.thisLife.isVulnerable = false;
+            controller.thisAnimator.SetTrigger("tHurt");
+        }
 
-        //     public override void Exit()
-        //     {
-        //         base.Exit();
-        //         // Exit
-        //         controller.thisLife.isVulnerable = true;
-        //     }
+        public override void Exit()
+        {
+            base.Exit();
+            // Resume Damage
+            controller.thisLife.isVulnerable = true;
+        }
 
-        //     public override void Update()
-        //     {
-        //         base.Update();
-        //         // update Time
-        //         timePassed += Time.deltaTime;
+        public override void Update()
+        {
+            base.Update();
+            // update Time
+            timePassed += Time.deltaTime;
 
-        //         // Switch state
-        //         if (timePassed >= controller.hurtDuration)
-        //         {
-        //             if (controller.thisLife.IsDead())
-        //             {
-        //                 controller.stateMachine.ChangeState(controller.deadState);
-        //             }
-        //             else
-        //             {
-        //                 controller.stateMachine.ChangeState(controller.idleState);
-        //             }
+            // Switch state
+            if (timePassed >= controller.hurtDuration)
+            {
+                if (controller.thisLife.IsDead())
+                {
+                    controller.stateMachine.ChangeState(controller.deadState);
+                }
+                else
+                {
+                    controller.stateMachine.ChangeState(controller.idleState);
+                }
 
 
-        //             return;
-        //         }
-        //     }
+                return;
+            }
+        }
 
-        //     public override void FixedUpdate()
-        //     {
-        //         base.FixedUpdate();
-        //     }
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
 
-        //     public override void LateUpdate()
-        //     {
-        //         base.LateUpdate();
-        //     }
+        public override void LateUpdate()
+        {
+            base.LateUpdate();
+        }
 
     }
 }
