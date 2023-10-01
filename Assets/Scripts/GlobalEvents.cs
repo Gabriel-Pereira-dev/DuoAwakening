@@ -1,5 +1,6 @@
 ﻿
     using System;
+    using EventArgs;
     using UnityEngine;
 
     public class GlobalEvents : MonoBehaviour
@@ -30,4 +31,9 @@
         {
 
         }
+        
+        public void InvokeOnBossDoorOpen(object sender, BossDoorOpenArgs args){ OnBossDoorOpen?.Invoke(sender,args);}
+        public void InvokeOnBossRoomEnter(object sender, BossRoomEnterArgs args){ OnBossRoomEnter?.Invoke(sender,args);}
+        public void InvokeOnGameOver(object sender, GameOverArgs args){ OnGameOver?.Invoke(sender,args);}
+        public void InvokeOnGameWon(object sender, GameWonArgs args){ OnGameWon?.Invoke(sender,args);}
     }

@@ -111,7 +111,8 @@ namespace Behaviors.LichBoss
         // Update is called once per frame
         void Update()
         {
-            stateMachine.Update();
+            var bossBattleHandler = GameManager.Instance.bossBattleHandler;
+            if(bossBattleHandler.IsActive()) {stateMachine.Update();}
             currentState = stateMachine.currentStateName;
 
             //Update anim velocity

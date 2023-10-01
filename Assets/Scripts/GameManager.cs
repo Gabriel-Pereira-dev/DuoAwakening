@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using BossBattle;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +27,12 @@ public class GameManager : MonoBehaviour
     [Header("Inventory")]
     public int keys;
     public bool hasBossKey;
+    
+    //Boss
+    [Header("Boss")] 
+    public GameObject boss;
+    public GameObject bossBattleParts;
+    public BossBattleHandler bossBattleHandler;
 
 
     // [Header("Character")]
@@ -44,15 +52,19 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-
         // Character
         // selectedCharacterIndex = PlayerPrefs.GetInt(KEY_SELECTED_CHARACTER_INDEX);
         // LoadCharacter();
     }
 
+    private void Start()
+    {
+        bossBattleHandler = new BossBattleHandler();
+    }
+
     void Update()
     {
-
+        bossBattleHandler.Update();
     }
 
 

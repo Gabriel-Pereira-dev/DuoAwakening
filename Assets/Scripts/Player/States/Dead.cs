@@ -1,3 +1,4 @@
+using EventArgs;
 using StateMachineNamespace;
 using UnityEngine;
 namespace Player.States
@@ -15,6 +16,9 @@ namespace Player.States
         {
             base.Enter();
             controller.thisAnimator.SetTrigger("tGameOver");
+            
+            // Game over
+            GlobalEvents.Instance.InvokeOnGameOver(this,new GameOverArgs());
         }
 
         public override void Exit()

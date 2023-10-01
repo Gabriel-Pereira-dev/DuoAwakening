@@ -24,6 +24,14 @@ namespace Player.States
         public override void Update()
         {
             base.Update();
+            
+            // Ignore if isInCutscene
+            var bossBattleHandler = GameManager.Instance.bossBattleHandler;
+            var isInCutscene = bossBattleHandler.IsInCutscene();
+            if (isInCutscene)
+            {
+                return;
+            }
 
             // Change to Attack
             if (controller.AttemptToAttack())

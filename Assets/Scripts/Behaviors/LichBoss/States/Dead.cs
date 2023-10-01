@@ -1,3 +1,4 @@
+using EventArgs;
 using StateMachineNamespace;
 
 namespace Behaviors.LichBoss.States
@@ -18,6 +19,9 @@ namespace Behaviors.LichBoss.States
             // Pause Damage
             controller.thisLife.isVulnerable = false;
             controller.thisAnimator.SetTrigger("tDead");
+            
+            // Game won
+            GlobalEvents.Instance.InvokeOnGameWon(this,new GameWonArgs());
         }
 
         public override void Exit()

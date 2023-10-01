@@ -73,8 +73,7 @@ namespace Door
         private void OpenDoor()
         {
             isOpen = true;
-            thisAnimator.SetTrigger("tOpen");
-
+            
             // Take Key
             if (requiredKey != null)
             {
@@ -82,13 +81,20 @@ namespace Door
                 if (requiredKey.itemType == ItemType.Key)
                 {
                     GameManager.Instance.keys--;
-                    interaction.SetAvailable(false);
                 }
                 else if (requiredKey.itemType == ItemType.BossKey)
                 {
+                    // Open Boss door
                     GameManager.Instance.hasBossKey = false;
+                    GlobalEvents.Instance.InvokeOnBossDoorOpen(this,new BossDoorOpenArgs());
                 }
             }
+            
+            // Disabled Interaction
+            interaction.SetAvailable(false);
+            
+            // Update Animation
+            thisAnimator.SetTrigger("tOpen");
 
         }
 

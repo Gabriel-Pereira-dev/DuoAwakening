@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using EventArgs;
@@ -116,6 +117,13 @@ public class PlayerController : MonoBehaviour
         // Detect Ground
         DetectGround();
         DetectSlope();
+
+        var bossBattleHandler = GameManager.Instance.bossBattleHandler;
+        var isInCutscene = bossBattleHandler.IsInCutscene();
+        if (isInCutscene && stateMachine.currentStateName != idleState.name)
+        {
+            stateMachine.ChangeState(idleState);
+        }
 
         stateMachine.Update();
     }
@@ -285,6 +293,15 @@ public class PlayerController : MonoBehaviour
             Vector3 spherePosition = direction * maxDistance + origin;
             Gizmos.color = isGrounded ? Color.magenta : Color.cyan;
             Gizmos.DrawSphere(spherePosition, radius);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BossRoomSensor"))
+        {
+            GlobalEvents.Instance.InvokeOnBossRoomEnter(this,new BossRoomEnterArgs());
+            Destroy(other.gameObject);
         }
     }
 
