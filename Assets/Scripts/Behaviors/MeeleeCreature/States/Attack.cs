@@ -42,7 +42,10 @@ namespace Behaviors.MeeleeCreature.States
         public override void Update()
         {
             base.Update();
-
+            
+            // Face player 
+            helper.FacePlayer();
+            
             if ((endAttackCooldown -= Time.deltaTime) <= 0)
             {
                 controller.stateMachine.ChangeState(controller.idleState);

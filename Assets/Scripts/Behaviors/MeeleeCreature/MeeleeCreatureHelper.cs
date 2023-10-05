@@ -48,5 +48,17 @@ namespace Behaviors.MeeleeCreature.States
             return true;
         }
 
+        public void FacePlayer()
+        {
+            var transform = controller.transform;
+            var player = GameManager.Instance.player;
+            var vecToPlayer = player.transform.position - transform.position;
+            vecToPlayer.y = 0;
+            vecToPlayer.Normalize();
+            var desiredRotation = Quaternion.LookRotation(vecToPlayer);
+            var newRotation = Quaternion.LerpUnclamped(transform.rotation, desiredRotation, 0.1f);
+            transform.rotation = newRotation;
+        }
+
     }
 }

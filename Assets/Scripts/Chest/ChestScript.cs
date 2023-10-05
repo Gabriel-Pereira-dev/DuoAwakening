@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using EventArgs;
 using Item;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Chest
 {
@@ -12,6 +14,8 @@ namespace Chest
         private Animator thisAnimator;
         public GameObject itemHolder;
         public Item.Item item;
+
+        public ChestOpenEvent onOpen = new();
         // Start is called before the first frame update
         void Awake()
         {
@@ -62,6 +66,11 @@ namespace Chest
                 var life = player.GetComponent<LifeScript>();
                 life.RestoreHealth();
             }
+            
+            // Call Events
+            onOpen?.Invoke(gameObject);
         }
+        
+        [Serializable] public class ChestOpenEvent: UnityEvent<GameObject>{}
     }
 }

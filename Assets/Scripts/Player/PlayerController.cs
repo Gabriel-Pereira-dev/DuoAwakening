@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     public float shieldKnockbackImpulse = 10f;
     public bool hasDefenseInput;
 
+    [Header("Effects")] public GameObject hitEffect;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -146,9 +148,9 @@ public class PlayerController : MonoBehaviour
         stateMachine.FixedUpdate();
     }
 
-    public void OnSwordCollisionEnter(Collider other)
+    public void OnSwordCollisionEnter(Collider otherCollider)
     {
-        var otherObject = other.gameObject;
+        var otherObject = otherCollider.gameObject;
         var otherRigidbody = otherObject.GetComponent<Rigidbody>();
         var otherLife = otherObject.GetComponent<LifeScript>();
 
@@ -158,6 +160,7 @@ public class PlayerController : MonoBehaviour
 
         if (isTargetOrCreature)
         {
+            Debug.Log("Ataque Espada");
             //Knockback
             if (otherRigidbody != null)
             {
@@ -170,9 +173,15 @@ public class PlayerController : MonoBehaviour
 
             if (otherLife != null)
             {
-                Debug.Log("Inflict Damage to " + otherObject.name);
                 var damage = attackDamageByStage[attackState.stage - 1];
                 otherLife.InflictDamage(gameObject, damage);
+            }
+
+            if (hitEffect != null)
+            {
+                var hitPosition = otherCollider.ClosestPointOnBounds(swordHitbox.transform.position);
+                var hitRotation = hitEffect.transform.rotation;
+                Instantiate(hitEffect, hitPosition, hitRotation);
             }
         }
     }

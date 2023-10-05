@@ -12,6 +12,7 @@ public class MeeleeCreatureController : MonoBehaviour
     [HideInInspector] public NavMeshAgent thisAgent;
     [HideInInspector] public LifeScript thisLife;
     [HideInInspector] public Animator thisAnimator;
+    [HideInInspector] public Collider thisCollider;
     public string currentState;
 
 
@@ -44,6 +45,8 @@ public class MeeleeCreatureController : MonoBehaviour
     [Header("Dead")]
     public float destroyIfFar = 1f;
 
+    [Header("Effect")] public GameObject knockOutEffect;
+
 
     void Awake()
     {
@@ -51,6 +54,7 @@ public class MeeleeCreatureController : MonoBehaviour
         thisAgent = GetComponent<NavMeshAgent>();
         thisLife = GetComponent<LifeScript>();
         thisAnimator = GetComponent<Animator>();
+        thisCollider = GetComponent<Collider>();
         // Helper
         helper = new MeeleeCreatureHelper(this);
     }
