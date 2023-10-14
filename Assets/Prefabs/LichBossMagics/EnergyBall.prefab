@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1729733359766919768}
   - component: {fileID: 1403839074533685874}
   - component: {fileID: 8520655218800942907}
+  - component: {fileID: -2799539735510247545}
   m_Layer: 12
   m_Name: EnergyBall
   m_TagString: Untagged
@@ -151,10 +152,10 @@ Transform:
   m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4161651254217024317}
   - {fileID: 2764075881227968347}
   - {fileID: 8063164532947791659}
   - {fileID: 9002089505420456526}
-  - {fileID: 4161651254217024317}
   - {fileID: 5926369659811837283}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -228,7 +229,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.73
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1403839074533685874
 Rigidbody:
@@ -269,9 +270,106 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0e4c692f614f859ce2a2f54af33f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 5924228406097186093}
+  hitEffect: {fileID: 3841086725287128968, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
+    type: 3}
   attacker: {fileID: 0}
   damage: 1
+--- !u!82 &-2799539735510247545
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6185367144800011312}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8c7728b32ed94944c9fde8da90fefa86, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2761855826306327505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,6 +381,10 @@ PrefabInstance:
     - target: {fileID: 1884747205189362, guid: 1b85934f3ab9f88409e04178ece71a05, type: 3}
       propertyPath: m_Name
       value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884747205189362, guid: 1b85934f3ab9f88409e04178ece71a05, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4483135165545610, guid: 1b85934f3ab9f88409e04178ece71a05, type: 3}
       propertyPath: m_RootOrder
@@ -437,6 +539,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1058325498707994, guid: 8333d50130027574ca8b4e0268fdd047, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4409308058060270, guid: 8333d50130027574ca8b4e0268fdd047, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -580,22 +686,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3840615755381261472, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3841086725287128968, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
         type: 3}
       propertyPath: m_Name
       value: Explosion01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3841086725287128968, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7229543429787684309, guid: 5fd9a718cca9ffc4db5f08a07adbf79e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd9a718cca9ffc4db5f08a07adbf79e, type: 3}
---- !u!1 &5924228406097186093 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3841086725287128968, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7456094417611825829}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5926369659811837283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3839300609265768390, guid: 5fd9a718cca9ffc4db5f08a07adbf79e,
@@ -617,6 +728,10 @@ PrefabInstance:
     - target: {fileID: 1682439711449256, guid: ab22dfee5ddd2634f991aee1f95f050f, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682439711449256, guid: ab22dfee5ddd2634f991aee1f95f050f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4228550296906564, guid: ab22dfee5ddd2634f991aee1f95f050f, type: 3}
       propertyPath: m_RootOrder

@@ -14,7 +14,11 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            transform.LookAt(thisCamera.transform);
+            Transform transform1;
+            (transform1 = transform).LookAt(thisCamera.transform);
+            var position = transform1.position;
+            position = new Vector3(position.x, 1.15f, position.z);
+            transform1.position = position;
         }
     }
 }

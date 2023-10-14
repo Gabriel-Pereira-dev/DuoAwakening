@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Rigidbody thisRigidbody;
     [HideInInspector] public Collider thisCollider;
     [HideInInspector] public AudioSource thisAudioSource;
-
     [HideInInspector] public Animator thisAnimator;
+    [HideInInspector] public LifeScript thisLife;
 
     // Movement
     [Header("Movement")]
@@ -68,19 +68,16 @@ public class PlayerController : MonoBehaviour
         thisCollider = GetComponent<Collider>();
         thisAnimator = GetComponent<Animator>();
         thisAudioSource = GetComponent<AudioSource>();
-        LifeScript lifeScript = GetComponent<LifeScript>();
-        if (lifeScript != null)
+        thisLife = GetComponent<LifeScript>();
+        if (thisLife != null)
         {
-            lifeScript.OnDamage += OnDamage;
+            thisLife.OnDamage += OnDamage;
+            thisLife.OnHeal += OnHeal;
+            thisLife.canInflictDamageDelegate += CanInflictDamage;
         }
     }
 
-    private void OnDamage(object sender, DamageEventArgs args)
-    {
-        Debug.Log("Hitting" + gameObject.name);
-    }
-
-    void Start()
+   void Start()
     {
         // State Machie and its states
         stateMachine = new StateMachine();
@@ -95,6 +92,10 @@ public class PlayerController : MonoBehaviour
         // Toggle hitbox
         swordHitbox.SetActive(false);
         shieldHitbox.SetActive(false);
+        
+        // Set max health in UI
+        var gameplayUI = GameManager.Instance.gameplayUI;
+        gameplayUI.playerHealthBar.SetMaxHealth(thisLife.maxHealth);
     }
 
     void Update()
@@ -147,6 +148,18 @@ public class PlayerController : MonoBehaviour
         // State
         stateMachine.FixedUpdate();
     }
+    
+    private void OnDamage(object sender, DamageEventArgs args)
+    {
+        var gameplayUI = GameManager.Instance.gameplayUI;
+        gameplayUI.playerHealthBar.SetHealth(thisLife.health);
+    }
+    
+    private void OnHeal(object sender, HealEventArgs args)
+    {
+        var gameplayUI = GameManager.Instance.gameplayUI;
+        gameplayUI.playerHealthBar.SetHealth(thisLife.health);
+    }
 
     public void OnSwordCollisionEnter(Collider otherCollider)
     {
@@ -160,7 +173,29 @@ public class PlayerController : MonoBehaviour
 
         if (isTargetOrCreature)
         {
-            Debug.Log("Ataque Espada");
+            // Life
+
+            if (otherLife != null)
+            {
+                var wasVulnerable = otherLife.isVulnerable;
+                var damage = attackDamageByStage[attackState.stage - 1];
+                otherLife.InflictDamage(gameObject, damage);
+
+                if (wasVulnerable)
+                {
+                    Debug.Log(otherObject.name+" - Ataque Espada Efeito Vulneravel");
+                    var hitPosition = otherCollider.ClosestPointOnBounds(swordHitbox.transform.position);
+                    var hitRotation = hitEffect.transform.rotation;
+                    Instantiate(hitEffect, hitPosition, hitRotation);
+                }
+            }else if (hitEffect != null)
+            {
+                Debug.Log(otherObject.name+" - Ataque Espada Efeito");
+                var hitPosition = otherCollider.ClosestPointOnBounds(swordHitbox.transform.position);
+                var hitRotation = hitEffect.transform.rotation;
+                Instantiate(hitEffect, hitPosition, hitRotation);
+            }
+            
             //Knockback
             if (otherRigidbody != null)
             {
@@ -169,20 +204,8 @@ public class PlayerController : MonoBehaviour
                 impulseVector *= swordKnockbackImpulse;
                 otherRigidbody.AddForce(impulseVector, ForceMode.Impulse);
             }
-            // Life
 
-            if (otherLife != null)
-            {
-                var damage = attackDamageByStage[attackState.stage - 1];
-                otherLife.InflictDamage(gameObject, damage);
-            }
-
-            if (hitEffect != null)
-            {
-                var hitPosition = otherCollider.ClosestPointOnBounds(swordHitbox.transform.position);
-                var hitRotation = hitEffect.transform.rotation;
-                Instantiate(hitEffect, hitPosition, hitRotation);
-            }
+            
         }
     }
 
@@ -198,6 +221,25 @@ public class PlayerController : MonoBehaviour
             impulseVector *= shieldKnockbackImpulse;
             otherRigidbody.AddForce(impulseVector, ForceMode.Impulse);
         }
+    }
+
+    private bool CanInflictDamage(GameObject attacker, int damage)
+    {
+        bool isDefending = stateMachine.currentStateName == defendState.name;
+        if (isDefending)
+        {
+            Vector3 playerDirection = transform.TransformDirection(Vector3.forward);
+            Vector3 attackDirection = (transform.position - attacker.transform.position).normalized;
+            float dot = Vector3.Dot(playerDirection, attackDirection);
+            Debug.Log("Dot - " + dot);
+            if (dot < - -0.25f)
+            {
+                return false;
+            }
+            ;
+        }
+
+        return true;
     }
 
     public Quaternion GetFoward()

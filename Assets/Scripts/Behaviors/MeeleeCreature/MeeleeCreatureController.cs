@@ -13,6 +13,7 @@ public class MeeleeCreatureController : MonoBehaviour
     [HideInInspector] public LifeScript thisLife;
     [HideInInspector] public Animator thisAnimator;
     [HideInInspector] public Collider thisCollider;
+    [HideInInspector] public Rigidbody thisRigidbody;
     public string currentState;
 
 
@@ -55,6 +56,7 @@ public class MeeleeCreatureController : MonoBehaviour
         thisLife = GetComponent<LifeScript>();
         thisAnimator = GetComponent<Animator>();
         thisCollider = GetComponent<Collider>();
+        thisRigidbody = GetComponent<Rigidbody>();
         // Helper
         helper = new MeeleeCreatureHelper(this);
     }

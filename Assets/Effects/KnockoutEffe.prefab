@@ -4932,6 +4932,7 @@ GameObject:
   - component: {fileID: 6487723722300879691}
   - component: {fileID: 6487723722300879701}
   - component: {fileID: 6487723722300879690}
+  - component: {fileID: 8770233422668599336}
   m_Layer: 0
   m_Name: vfx_Orb
   m_TagString: Untagged
@@ -4969,7 +4970,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5208,7 +5209,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.25
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9807,3 +9808,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8770233422668599336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487723722300879688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3173b3e0ae8f43d69b0175519f1d3cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

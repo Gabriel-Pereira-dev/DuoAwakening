@@ -70,7 +70,7 @@ namespace Behaviors.LichBoss.States
         {
             yield return new WaitForSeconds(delay);
             
-            Debug.Log("Atacou SUPER");
+            
             
             //Get prefab
             List<GameObject> prefabs = new List<GameObject>(){controller.fireballPrefab,controller.energyballPrefab};
@@ -100,7 +100,16 @@ namespace Behaviors.LichBoss.States
             forceVector *= controller.attackSuperImpulse;
             projectileRigidbody.AddForce(forceVector,ForceMode.Impulse);
 
-            
+            // Play cast sound
+            var projectileAudio = projectile.GetComponent<AudioSource>();
+            if (projectileAudio != null)
+            {
+                var clip = projectileAudio.clip;
+                controller.thisAudioSource.volume = projectileAudio.volume;
+                controller.thisAudioSource.priority = projectileAudio.priority;
+                controller.thisAudioSource.pitch = projectileAudio.pitch;
+                controller.thisAudioSource.PlayOneShot(clip);
+            }
             
             Object.Destroy(projectile,30f);
         }

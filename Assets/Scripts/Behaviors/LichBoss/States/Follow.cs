@@ -26,7 +26,12 @@ namespace Behaviors.LichBoss.States
             //Reset
             attackAttemptCooldown = attackAttemptInterval;
             targetUpdateCooldown = 0f;
-            ceaseFollowCooldown = controller.ceaseFollowInterval;
+            
+            //Get Interval
+            var ceaseFollowInterval = helper.HasLowHealth() ? controller.ceaseFollowIntervalOnLowHealth : controller.ceaseFollowInterval;
+            
+            //Set Interval
+            ceaseFollowCooldown = ceaseFollowInterval;
 
         }
 

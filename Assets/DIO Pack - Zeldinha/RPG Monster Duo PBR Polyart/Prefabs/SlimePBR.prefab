@@ -420,7 +420,7 @@ Transform:
   - {fileID: 4409866491529092}
   - {fileID: 4127066169186206}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1793747633067834084
 SphereCollider:
@@ -519,7 +519,7 @@ MonoBehaviour:
   attackDurantion: 3
   attackDamage: 1
   hurtDuration: 0.5
-  destroyIfFar: 1
+  destroyIfFar: 10
   knockOutEffect: {fileID: 0}
 --- !u!114 &2855604036577752750
 MonoBehaviour:

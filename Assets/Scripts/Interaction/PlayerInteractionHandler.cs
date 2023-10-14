@@ -30,7 +30,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             if (currentInteraction != null)
             {
                 currentInteraction.Interact();
-                Debug.Log("Interagiu com algo");
+                
                 ScanObjects();
             }
         }

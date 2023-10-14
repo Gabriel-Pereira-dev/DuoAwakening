@@ -37,7 +37,7 @@ namespace Chest
 
         private void OnInteraction(object sender, InteractionEventArgs e)
         {
-            Debug.Log("Interagiu com o báu");
+            
             // Disable interaction
             interaction.SetAvailable(false);
             // Update animator
@@ -69,6 +69,10 @@ namespace Chest
             
             // Call Events
             onOpen?.Invoke(gameObject);
+            
+            // Update UI
+            var gameplayUI = GameManager.Instance.gameplayUI;
+            gameplayUI.AddObject(itemType);
         }
         
         [Serializable] public class ChestOpenEvent: UnityEvent<GameObject>{}

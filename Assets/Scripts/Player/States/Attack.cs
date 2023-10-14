@@ -57,6 +57,12 @@ namespace Player.States
 
             // Update state time
             stateTime += Time.deltaTime;
+            
+            // Disabled swordhitbox
+            // if (IsAttackAnimationFinished())
+            // {
+            //     controller.swordHitbox.SetActive(false);
+            // }
 
             // Exit after time
             if (IsStageExpired())
@@ -109,6 +115,17 @@ namespace Player.States
             var maxStageTimeDuration = stageDuration + stageMaxInterval;
             // Reply
             return stateTime > maxStageTimeDuration;
+        }
+
+        public bool IsAttackAnimationFinished()
+        {
+           
+                // Get Attack Variables
+                var stageDuration = controller.attackStageDurations[stage - 1];
+
+                // Reply
+                return stateTime > stageDuration;
+            
         }
 
     }

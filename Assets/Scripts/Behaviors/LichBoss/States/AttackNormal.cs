@@ -59,7 +59,7 @@ namespace Behaviors.LichBoss.States
         {
             yield return new WaitForSeconds(delay);
             
-            Debug.Log("Atacou NORMAL");
+            
             
             //Get prefab
             List<GameObject> prefabs = new List<GameObject>(){controller.fireballPrefab,controller.energyballPrefab};
@@ -88,6 +88,17 @@ namespace Behaviors.LichBoss.States
             forceVector = new Vector3(forceVector.x, vectorToPlayer.y, forceVector.z);
             forceVector *= controller.attackNormalImpulse;
             projectileRigidbody.AddForce(forceVector,ForceMode.Impulse);
+            
+            // Play cast sound
+            var projectileAudio = projectile.GetComponent<AudioSource>();
+            if (projectileAudio != null)
+            {
+                var clip = projectileAudio.clip;
+                controller.thisAudioSource.volume = projectileAudio.volume;
+                controller.thisAudioSource.priority = projectileAudio.priority;
+                controller.thisAudioSource.pitch = projectileAudio.pitch;
+                controller.thisAudioSource.PlayOneShot(clip);
+            }
 
             
             

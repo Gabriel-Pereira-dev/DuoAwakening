@@ -16,6 +16,7 @@ namespace Behaviors.LichBoss
         [HideInInspector] public NavMeshAgent thisAgent;
         [HideInInspector] public LifeScript thisLife;
         [HideInInspector] public Animator thisAnimator;
+        [HideInInspector] public AudioSource thisAudioSource;
         public string currentState;
 
 
@@ -39,6 +40,8 @@ namespace Behaviors.LichBoss
         public float idleDuration = 0.3f;
         [Header("Follow")]
         public float ceaseFollowInterval = 4f;
+
+        public float ceaseFollowIntervalOnLowHealth = 2f;
         
         [Header("Attack")]
         public int attackDamage = 1;
@@ -79,6 +82,7 @@ namespace Behaviors.LichBoss
             thisAgent = GetComponent<NavMeshAgent>();
             thisLife = GetComponent<LifeScript>();
             thisAnimator = GetComponent<Animator>();
+            thisAudioSource = GetComponent<AudioSource>();
             // Helper
             helper = new LichBossHelper(this);
             
@@ -104,7 +108,7 @@ namespace Behaviors.LichBoss
 
         private void OnDamage(object sender, DamageEventArgs args)
         {
-            Debug.Log("Boss recebeu dano");
+           
             stateMachine.ChangeState(hurtState);
         }
 

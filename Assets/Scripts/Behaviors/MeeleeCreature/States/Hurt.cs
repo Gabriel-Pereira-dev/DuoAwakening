@@ -24,6 +24,10 @@ namespace Behaviors.MeeleeCreature.States
             // Pause Damage
             controller.thisLife.isVulnerable = false;
             controller.thisAnimator.SetTrigger("tHurt");
+            
+            // Shift Object control Navmesh to Physics
+            controller.thisAgent.enabled = false;
+            controller.thisRigidbody.isKinematic = false;
         }
 
         public override void Exit()
@@ -31,6 +35,10 @@ namespace Behaviors.MeeleeCreature.States
             base.Exit();
             // Exit
             controller.thisLife.isVulnerable = true;
+            
+            // Shift Object control Physics back to Navmesh
+            controller.thisAgent.enabled = true;
+            controller.thisRigidbody.isKinematic = true;
         }
 
         public override void Update()

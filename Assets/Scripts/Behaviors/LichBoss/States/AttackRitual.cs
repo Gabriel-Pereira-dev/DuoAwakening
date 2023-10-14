@@ -57,7 +57,7 @@ namespace Behaviors.LichBoss.States
         {
             yield return new WaitForSeconds(delay);
             
-            Debug.Log("Atacou RITUAL");
+           
 
             var ritual = Object.Instantiate(controller.ritualPrefab, controller.staffBottom.position,
                 controller.ritualPrefab.transform.rotation);

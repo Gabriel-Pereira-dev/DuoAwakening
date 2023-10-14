@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using StateMachineNamespace;
 using UnityEngine;
 
@@ -48,7 +49,11 @@ namespace Behaviors.LichBoss.States
                 }
                 else
                 {
-                    controller.stateMachine.ChangeState(controller.idleState);
+                    State attackState = helper.HasLowHealth() ? controller.attackSuperState : controller.attackNormalState;
+                    List<State> states = new List<State>(){controller.attackRitualState,attackState};
+                    var state = states[Random.Range(0, states.Count)];
+                    controller.stateMachine.ChangeState(state);
+                    // controller.stateMachine.ChangeState(controller.idleState);
                 }
 
 

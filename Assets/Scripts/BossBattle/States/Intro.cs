@@ -19,8 +19,22 @@ namespace BossBattle.States
             // Reset stuff
             timeElapsed = 0f;
             
+            //Get gameManager
+            var gameManager = GameManager.Instance;
+            
             // Enable boss battle parts
-            GameManager.Instance.bossBattleParts.SetActive(true);
+            gameManager.bossBattleParts.SetActive(true);
+            
+            // Stop gameplay music
+            var gameplayMusic = gameManager.gameplayMusic;
+            gameManager.StartCoroutine(FadeAudioSource.StartFade(gameplayMusic, 0f, 2f));
+            
+            // Play boss music
+            var bossMusic = gameManager.bossMusic;
+            var bossTargetVolume = bossMusic.volume;
+            bossMusic.volume = 0;
+            gameManager.StartCoroutine(FadeAudioSource.StartFade(bossMusic, bossTargetVolume,0.5f));
+            bossMusic.Play();
         }
 
         public override void Exit()

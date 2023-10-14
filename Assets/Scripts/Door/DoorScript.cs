@@ -53,7 +53,7 @@ namespace Door
 
         private void OnInteraction(object sender, InteractionEventArgs e)
         {
-            Debug.Log("Interagiu com o porta");
+            
             // Checa se tem a chave
             var hasRequiredKey = true;
             if (!isOpen)
@@ -95,6 +95,11 @@ namespace Door
             
             // Update Animation
             thisAnimator.SetTrigger("tOpen");
+            
+            // Update UI
+            var gameplayUI = GameManager.Instance.gameplayUI;
+            gameplayUI.RemoveObject(requiredKey.itemType);
+            
 
         }
 

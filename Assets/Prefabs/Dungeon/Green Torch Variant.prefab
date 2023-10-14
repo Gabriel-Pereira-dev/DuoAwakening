@@ -8,10 +8,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5441012279231879140, guid: 99e1143ebcb16d64a8a6179f311393f5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5812160594731214886, guid: 99e1143ebcb16d64a8a6179f311393f5,
         type: 3}
       propertyPath: m_Name
       value: Green Torch Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812160594731214886, guid: 99e1143ebcb16d64a8a6179f311393f5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6621173160983818908, guid: 99e1143ebcb16d64a8a6179f311393f5,
         type: 3}

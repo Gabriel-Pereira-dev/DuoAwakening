@@ -1,5 +1,4 @@
 ﻿using BossBattle.States;
-using BossFinished.States;
 using StateMachineNamespace;
 
 namespace BossBattle
@@ -11,7 +10,8 @@ namespace BossBattle
         public Waiting stateWaiting;
         public Intro stateIntro;
         public Battle stateBattle;
-        public Finished stateFinished;
+        public BossVictorious stateVictorious;
+        public BossDefeated stateDefeated;
         
         public BossBattleHandler()
         {
@@ -21,7 +21,8 @@ namespace BossBattle
             stateWaiting = new Waiting();
             stateIntro = new Intro();
             stateBattle = new Battle();
-            stateFinished = new Finished();
+            stateVictorious = new BossVictorious();
+            stateDefeated = new BossDefeated();
             
             stateMachine.ChangeState(stateDisabled);
             GameManager.Instance.bossBattleParts.SetActive(false);
@@ -30,8 +31,8 @@ namespace BossBattle
             var globalEvents = GlobalEvents.Instance;
             globalEvents.OnBossDoorOpen += ((sender, args) => stateMachine.ChangeState(stateWaiting));
             globalEvents.OnBossRoomEnter += ((sender, args) => stateMachine.ChangeState(stateIntro));
-            globalEvents.OnGameOver += ((sender, args) => stateMachine.ChangeState(stateFinished));
-            globalEvents.OnGameWon += ((sender, args) => stateMachine.ChangeState(stateFinished));
+            globalEvents.OnGameOver += ((sender, args) => stateMachine.ChangeState(stateVictorious));
+            globalEvents.OnGameWon += ((sender, args) => stateMachine.ChangeState(stateDefeated));
         }
 
         public void Update()

@@ -56,10 +56,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1108340941322671797, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 2855604036577752750, guid: 55776efecb0cd134ea5f418c2f97a705,
         type: 3}
       propertyPath: healingPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3434464207673260734, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
+      propertyPath: destroyIfFar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3434464207673260734, guid: 55776efecb0cd134ea5f418c2f97a705,
+        type: 3}
+      propertyPath: hurtDuration
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3434464207673260734, guid: 55776efecb0cd134ea5f418c2f97a705,
         type: 3}
