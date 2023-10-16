@@ -49,10 +49,15 @@ namespace Behaviors.LichBoss.States
                 }
                 else
                 {
-                    State attackState = helper.HasLowHealth() ? controller.attackSuperState : controller.attackNormalState;
-                    List<State> states = new List<State>(){controller.attackRitualState,attackState};
-                    var state = states[Random.Range(0, states.Count)];
-                    controller.stateMachine.ChangeState(state);
+                    if (helper.CanTeleport())
+                    {
+                       controller.stateMachine.ChangeState(controller.teleportState); 
+                    }
+                    else
+                    {
+                        controller.stateMachine.ChangeState(controller.attackRitualState);
+                    }
+                    
                     // controller.stateMachine.ChangeState(controller.idleState);
                 }
 

@@ -23,12 +23,26 @@ namespace Behaviors.LichBoss
             return distance;
             
         }
-
+        
         public bool HasLowHealth()
         {
             var life = controller.thisLife;
             float lifeRate = (float)life.health / (float)life.maxHealth; ;
             return lifeRate <= controller.lowHealthThreshold;
+        }
+
+        public bool CanTeleport()
+        {
+            var hasSpawnPoints = controller.teleportSpawnPoints.Count != 0;
+            if (hasSpawnPoints)
+            {
+                var teleportLottery = Random.Range(0f, 1f);
+                var teleportChance = HasLowHealth() ? controller.teleportChanceOnLowHealth : controller.teleportChance;
+                var willTeleport = teleportLottery <= teleportChance;
+                return willTeleport;
+            }
+
+            return false;
         }
 
         public void StartStateCoroutine(IEnumerator enumerator)

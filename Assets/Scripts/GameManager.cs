@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")] public GameplayUI gameplayUI;
 
+    [Header("Checkpoint")] public Vector3 lastCheckpoint;
+
     // [Header("Character")]
     // public int selectedCharacterIndex;
     // public GameObject[] characters;
@@ -98,6 +100,16 @@ public class GameManager : MonoBehaviour
     //     characterName = prefab.name;
 
     // }
+
+    public void LoadCheckpoint()
+    {
+        var playerController = player.GetComponent<PlayerController>();
+        var isKinematic = playerController.thisRigidbody.isKinematic;
+        isKinematic = true;
+        player.transform.position = lastCheckpoint;
+        isKinematic = false;
+
+    }
 
 
 }

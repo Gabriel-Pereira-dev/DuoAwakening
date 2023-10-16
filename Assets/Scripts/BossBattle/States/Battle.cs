@@ -35,12 +35,6 @@ namespace BossBattle.States
         {
             base.Update();
             
-            // Update health
-            var gameManager = GameManager.Instance;
-            var gameplayUI = gameManager.gameplayUI;
-            var boss = gameManager.boss;
-            var bossLife = boss.GetComponent<LifeScript>();
-            gameplayUI.bossHealthBar.SetHealth(bossLife.health);
-        }
+            }
     }
 }

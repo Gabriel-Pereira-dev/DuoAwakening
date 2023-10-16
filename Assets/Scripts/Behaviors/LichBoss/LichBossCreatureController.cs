@@ -17,6 +17,7 @@ namespace Behaviors.LichBoss
         [HideInInspector] public LifeScript thisLife;
         [HideInInspector] public Animator thisAnimator;
         [HideInInspector] public AudioSource thisAudioSource;
+        [HideInInspector] public Rigidbody thisRigidbody;
         public string currentState;
 
 
@@ -29,6 +30,7 @@ namespace Behaviors.LichBoss
         [HideInInspector] public Follow followState;
         [HideInInspector] public Hurt hurtState;
         [HideInInspector] public Dead deadState;
+        [HideInInspector] public Teleport teleportState;
 
         // Controller Attr
 
@@ -64,6 +66,15 @@ namespace Behaviors.LichBoss
         public int attackSuperCount = 5;
         public float attackSuperImpulse = 10f;
 
+        [Header("Teleport")] 
+        public float teleportDelay = 0f;
+        public float teleportDuration = 1f;
+        [Range(0f,1f)]
+        public float teleportChance = 0.3f;
+        [Range(0f,1f)]
+        public float teleportChanceOnLowHealth = 0.3f;
+        public List<Transform> teleportSpawnPoints = new();
+
         [Header("Hurt")]
         public float hurtDuration = 0.5f;
 
@@ -71,6 +82,7 @@ namespace Behaviors.LichBoss
         public GameObject fireballPrefab;
         public GameObject energyballPrefab;
         public GameObject ritualPrefab;
+        public GameObject teleportPrefab;
         
         // State Coroutines
         [HideInInspector] public List<IEnumerator> stateCoroutines = new();
@@ -83,6 +95,7 @@ namespace Behaviors.LichBoss
             thisLife = GetComponent<LifeScript>();
             thisAnimator = GetComponent<Animator>();
             thisAudioSource = GetComponent<AudioSource>();
+            thisRigidbody = GetComponent<Rigidbody>();
             // Helper
             helper = new LichBossHelper(this);
             
@@ -100,6 +113,7 @@ namespace Behaviors.LichBoss
             followState = new Follow(this);
             hurtState = new Hurt(this);
             deadState = new Dead(this);
+            teleportState = new Teleport(this);
             stateMachine.ChangeState(idleState);
 
             //Register listeners
@@ -108,7 +122,12 @@ namespace Behaviors.LichBoss
 
         private void OnDamage(object sender, DamageEventArgs args)
         {
-           
+            // Update health
+            var gameManager = GameManager.Instance;
+            var gameplayUI = gameManager.gameplayUI;
+            var boss = gameManager.boss;
+            var bossLife = boss.GetComponent<LifeScript>();
+            gameplayUI.bossHealthBar.SetHealth(bossLife.health);
             stateMachine.ChangeState(hurtState);
         }
 

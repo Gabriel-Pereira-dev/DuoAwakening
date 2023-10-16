@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Attack attackState;
     [HideInInspector] public Defend defendState;
     [HideInInspector] public Dead deadState;
+    [HideInInspector] public Hurt hurtState;
 
     // Components
 
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Effects")] public GameObject hitEffect;
 
+    [Header("Hurt")] public float hurtDuration = 0.5f;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
         attackState = new Attack(this);
         defendState = new Defend(this);
         deadState = new Dead(this);
+        hurtState = new Hurt(this);
         stateMachine.ChangeState(idleState);
 
         // Toggle hitbox
@@ -153,6 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         var gameplayUI = GameManager.Instance.gameplayUI;
         gameplayUI.playerHealthBar.SetHealth(thisLife.health);
+        stateMachine.ChangeState(hurtState);
     }
     
     private void OnHeal(object sender, HealEventArgs args)
