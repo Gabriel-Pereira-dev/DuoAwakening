@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Behaviors.MeeleeCreature.States
@@ -46,6 +47,21 @@ namespace Behaviors.MeeleeCreature.States
                 }
             }
             return true;
+        }
+        
+        public void StartStateCoroutine(IEnumerator enumerator)
+        {
+            controller.StartCoroutine(enumerator);
+            controller.stateCoroutines.Add(enumerator);
+        }
+        
+        public void ClearStateCoroutines()
+        {
+            foreach (var enumerator in controller.stateCoroutines)
+            {
+                controller.StopCoroutine(enumerator);
+            }
+            controller.stateCoroutines.Clear();
         }
 
         public void FacePlayer()

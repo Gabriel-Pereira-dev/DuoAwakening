@@ -31,9 +31,8 @@ namespace Behaviors.LichBoss.States
             //controller.thisAnimator.SetTrigger("tTeleport");
             
             // Shift Object control Navmesh to Physics
+            //controller.thisRigidbody.isKinematic = false;
             controller.thisAgent.enabled = false;
-            controller.thisRigidbody.isKinematic = false;
-            
             
             // Schedule Teleport
             controller.StartCoroutine(ScheduleTeleport(controller.teleportDelay));
@@ -46,8 +45,9 @@ namespace Behaviors.LichBoss.States
             controller.thisLife.isVulnerable = true;
             
             // Shift Object control Physics back to Navmesh
+           // controller.thisRigidbody.isKinematic = true;
             controller.thisAgent.enabled = true;
-            controller.thisRigidbody.isKinematic = true;
+            
         }
 
         public override void Update()
@@ -59,6 +59,17 @@ namespace Behaviors.LichBoss.States
             // Switch state
             if (timePassed >= controller.teleportDuration)
             {
+
+                // Ritual after teleport
+                var distanceToPlayer = helper.GetDistanceToPlayer();
+                var isCloseEnoughToRitual = distanceToPlayer <= controller.distanceToRitual;
+                if (isCloseEnoughToRitual)
+                {
+                    controller.stateMachine.ChangeState(controller.attackRitualState);
+                    return;
+                }
+                
+                // Attack after teleport
                 State attackState = helper.HasLowHealth() ? controller.attackSuperState : controller.attackNormalState;
                 controller.stateMachine.ChangeState(attackState);
                 

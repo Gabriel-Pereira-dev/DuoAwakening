@@ -32,8 +32,7 @@ public class LifeScript : MonoBehaviour
         
         if (isVulnerable)
         {
-            
-        // Can inflict damage?
+         // Can inflict damage?
         bool? canYouInflictDamage = canInflictDamageDelegate?.Invoke(attacker, damage);
         if (canYouInflictDamage.HasValue && !canYouInflictDamage.Value) return;
         
@@ -56,7 +55,7 @@ public class LifeScript : MonoBehaviour
         health = (int) clampedHealth;
         
         //Create effect
-        createHealEffect();
+        CreateHealEffect();
         
         OnHeal?.Invoke(this, new HealEventArgs()
         {
@@ -65,16 +64,22 @@ public class LifeScript : MonoBehaviour
         });
     }
 
-    public void RestoreHealth()
+    public void RestoreHealth(GameObject healer)
     {
         // Heal
         health = maxHealth;
         
         //Create effect
-        createHealEffect();
+        CreateHealEffect();
+        
+        OnHeal?.Invoke(this, new HealEventArgs()
+        {
+            healer = healer,
+            healedHealth = maxHealth
+        });
     }
 
-    private void createHealEffect()
+    private void CreateHealEffect()
     {
         //Create effect
         if (healingPrefab != null)

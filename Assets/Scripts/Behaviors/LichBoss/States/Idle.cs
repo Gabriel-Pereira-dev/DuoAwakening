@@ -33,6 +33,9 @@ namespace Behaviors.LichBoss.States
             base.Update();
 
             stateTime += Time.deltaTime;
+            
+            // Ignore if gameover
+            if (GameManager.Instance.isGameOver) return;
 
             //Switch to follow
             if (stateTime >= controller.idleDuration)

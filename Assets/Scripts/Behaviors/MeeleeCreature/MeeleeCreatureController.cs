@@ -47,6 +47,9 @@ public class MeeleeCreatureController : MonoBehaviour
     public float destroyIfFar = 1f;
 
     [Header("Effect")] public GameObject knockOutEffect;
+    
+    // State Coroutines
+    [HideInInspector] public List<IEnumerator> stateCoroutines = new();
 
 
     void Awake()

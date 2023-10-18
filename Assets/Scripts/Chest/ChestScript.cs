@@ -64,7 +64,7 @@ namespace Chest
             {
                 var player = GameManager.Instance.player;
                 var life = player.GetComponent<LifeScript>();
-                life.RestoreHealth();
+                life.RestoreHealth(gameObject);
             }
             
             // Call Events

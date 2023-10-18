@@ -47,21 +47,20 @@ namespace Player.States
                 return;
             }
             
-            base.Update();
             // update Time
             timePassed += Time.deltaTime;
-
-            // Switch state
+            
+            // Switch to dead state
+            if (controller.thisLife.IsDead())
+            {
+                controller.stateMachine.ChangeState(controller.deadState);
+                return;
+            }
+            
+            // Switch to idle state
             if (timePassed >= controller.hurtDuration)
             {
-                if (controller.thisLife.IsDead())
-                {
-                    controller.stateMachine.ChangeState(controller.deadState);
-                }
-                else
-                {
-                    controller.stateMachine.ChangeState(controller.idleState);
-                }
+                controller.stateMachine.ChangeState(controller.idleState);
                 return;
             }
 

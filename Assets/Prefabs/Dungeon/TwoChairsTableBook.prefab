@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5943529716095574955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TwoChairsTableBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2341788267336645433}
   - {fileID: 8721673766497740049}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4596717261432686442
 PrefabInstance:
@@ -49,6 +49,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_Library_01_InkWell#1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120851468128533503, guid: a1528d34a1e95b446b60207527c95630,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7609262588306579781, guid: a1528d34a1e95b446b60207527c95630,
         type: 3}
@@ -184,6 +189,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 02_Kitchen_01_WoodenTable#2
       objectReference: {fileID: 0}
+    - target: {fileID: 4498884702426641234, guid: 4e9901af3e497e7429076003e747a671,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -207,6 +217,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_Library_01_Candle#1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008283956720251112, guid: eadc14f97c7aa7f40abb707a8a1effe7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6353003201315039826, guid: eadc14f97c7aa7f40abb707a8a1effe7,
         type: 3}
@@ -263,6 +278,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7482994604140351754, guid: eadc14f97c7aa7f40abb707a8a1effe7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -286,6 +306,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_Library_01_Chear_High#2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272571261425608673, guid: 201f1d7d2f5f856409ebf8fe096e2897,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6649414185365585243, guid: 201f1d7d2f5f856409ebf8fe096e2897,
         type: 3}
@@ -366,6 +391,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 01_Library_01_Chear_High#2
       objectReference: {fileID: 0}
+    - target: {fileID: 6272571261425608673, guid: 201f1d7d2f5f856409ebf8fe096e2897,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6649414185365585243, guid: 201f1d7d2f5f856409ebf8fe096e2897,
         type: 3}
       propertyPath: m_RootOrder
@@ -444,6 +474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_Library_01_BigBook#2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860964534821479213, guid: f536eaf6406c43142a48920508c90e4c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4530399559168965015, guid: f536eaf6406c43142a48920508c90e4c,
         type: 3}

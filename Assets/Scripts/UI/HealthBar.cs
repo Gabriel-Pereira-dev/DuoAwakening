@@ -24,7 +24,6 @@ namespace UI
         
         public void SetHealth(int health)
         {
-            
             this.health = health;
         }
     }

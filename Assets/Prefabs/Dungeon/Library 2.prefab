@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2122021472002707510}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Library 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 3506772706391733315}
   - {fileID: 3318646863103764253}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2373233555557480554
 PrefabInstance:
@@ -51,6 +51,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_DiningHall_01_Bowl#1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605796194322107223, guid: 7385a5b1d6cd83344ab5512a41f8407c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8945906599101862381, guid: 7385a5b1d6cd83344ab5512a41f8407c,
         type: 3}
@@ -265,6 +270,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 02_Kitchen_01_Chopper
       objectReference: {fileID: 0}
+    - target: {fileID: 1849875836332357052, guid: 824770d61a973b143abb2b21af237bea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -344,6 +354,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 01_Library_01_BigBook#1
       objectReference: {fileID: 0}
+    - target: {fileID: 6771631280863639088, guid: d25d95f3dfebac745bb1dcdd67337e8f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -367,6 +382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_DiningHall_01_Bowl#1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605796194322107223, guid: 7385a5b1d6cd83344ab5512a41f8407c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8945906599101862381, guid: 7385a5b1d6cd83344ab5512a41f8407c,
         type: 3}
@@ -446,6 +466,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_DiningHall_01_Bowl#1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605796194322107223, guid: 7385a5b1d6cd83344ab5512a41f8407c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8945906599101862381, guid: 7385a5b1d6cd83344ab5512a41f8407c,
         type: 3}
@@ -581,6 +606,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 01_DiningHall_01_Cup#1
       objectReference: {fileID: 0}
+    - target: {fileID: 4397025831198927224, guid: d4f41908b337fbf4e9e4f613690a0390,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -604,6 +634,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 01_DiningHall_01_Cup#2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8377533098080618929, guid: 041383aba1c768a44a5d24129b99e827,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9153893192445989643, guid: 041383aba1c768a44a5d24129b99e827,
         type: 3}

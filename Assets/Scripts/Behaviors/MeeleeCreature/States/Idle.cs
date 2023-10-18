@@ -31,6 +31,9 @@ namespace Behaviors.MeeleeCreature.States
         public override void Update()
         {
             base.Update();
+            
+            // Ignore if gameover
+            if (GameManager.Instance.isGameOver) return;
 
             // Update cooldown
             searchCooldown -= Time.deltaTime;

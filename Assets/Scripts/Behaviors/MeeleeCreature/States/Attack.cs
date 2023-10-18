@@ -10,7 +10,7 @@ namespace Behaviors.MeeleeCreature.States
         private MeeleeCreatureHelper helper;
 
         private float endAttackCooldown;
-        private IEnumerator attackCoroutine;
+
         public Attack(MeeleeCreatureController controller) : base("Attack")
         {
             this.controller = controller;
@@ -23,9 +23,9 @@ namespace Behaviors.MeeleeCreature.States
             // Set variables
             endAttackCooldown = controller.attackDurantion;
             controller.thisAnimator.SetTrigger("tAttack");
+            
             // Schedule Attack
-            attackCoroutine = ScheduleAttack();
-            controller.StartCoroutine(ScheduleAttack());
+            helper.StartStateCoroutine(ScheduleAttack());
         }
 
         public override void Exit()
@@ -33,10 +33,8 @@ namespace Behaviors.MeeleeCreature.States
             base.Exit();
 
             // Cancel attack
-            if (attackCoroutine != null)
-            {
-                controller.StopCoroutine(attackCoroutine);
-            }
+            helper.ClearStateCoroutines();
+            
         }
 
         public override void Update()

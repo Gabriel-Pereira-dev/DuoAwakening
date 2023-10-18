@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Checkpoint")] public Vector3 lastCheckpoint;
 
+    [Header("GameOver")] public bool isGameOver;
+
     // [Header("Character")]
     // public int selectedCharacterIndex;
     // public GameObject[] characters;
@@ -82,6 +84,9 @@ public class GameManager : MonoBehaviour
         ambienceMusic.volume = 0;
         StartCoroutine(FadeAudioSource.StartFade(ambienceMusic, ambienceTargetVolume,1f));
         ambienceMusic.Play();
+        
+        // Listen game over
+        GlobalEvents.Instance.OnGameOver += ((sender, args) => isGameOver = true);
     }
 
     void Update()

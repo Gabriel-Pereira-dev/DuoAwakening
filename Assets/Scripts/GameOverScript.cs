@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using EventArgs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,24 +9,34 @@ namespace DefaultNamespace
     public class GameOverScript : MonoBehaviour
     {
         public GameObject objectToEnable;
-        public float gameOverDuration = 0f;
-
+        public float gameOverDuration = 6f;
+        public bool isTriggered;
         private void Start()
         {
             var globalEvents = GlobalEvents.Instance;
-            globalEvents.OnGameOver += ((sender, args) => StartCoroutine(StartGameOver()) );
+            globalEvents.OnGameOver += OnGameOver;
         }
 
-        public IEnumerator StartGameOver()
+        public void OnGameOver(object sender, GameOverArgs args)
         {
-            // Enable Post Process
+            // Debounce
+            if (isTriggered) return;
+            isTriggered = true;
+            
+            // Activate object
             objectToEnable.SetActive(true);
             
+            // Reload Scene
+            StartCoroutine(ReloadScene());
+        }
+
+        public IEnumerator ReloadScene()
+        {   
             // GameOver duration
             yield return new WaitForSeconds(gameOverDuration);
             
             // Load title scene
-            SceneManager.LoadScene("TitleScene");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     

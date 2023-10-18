@@ -155,13 +155,33 @@ public class PlayerController : MonoBehaviour
     
     private void OnDamage(object sender, DamageEventArgs args)
     {
+        // Ignore if gameover
+        if (GameManager.Instance.isGameOver) return;
+        
+        // Update UI
         var gameplayUI = GameManager.Instance.gameplayUI;
         gameplayUI.playerHealthBar.SetHealth(thisLife.health);
-        stateMachine.ChangeState(hurtState);
+        
+        
+        // Switch to dead state
+        if (thisLife.IsDead())
+        {
+            stateMachine.ChangeState(deadState);
+        }
+        // Change to hurt state
+        else
+        {
+            stateMachine.ChangeState(hurtState);
+        }
+        
     }
     
     private void OnHeal(object sender, HealEventArgs args)
     {
+        // Ignore if gameover
+        if (GameManager.Instance.isGameOver) return;
+        
+        // Update UI
         var gameplayUI = GameManager.Instance.gameplayUI;
         gameplayUI.playerHealthBar.SetHealth(thisLife.health);
     }
