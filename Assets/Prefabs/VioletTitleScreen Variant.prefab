@@ -21,12 +21,12 @@ PrefabInstance:
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
@@ -36,12 +36,12 @@ PrefabInstance:
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
@@ -66,13 +66,18 @@ PrefabInstance:
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 6022947050601039112, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6061694548526100562, guid: b39987008f3700442ac678ba398faa9f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3c9d3713ee99c7040a5f4be1b108db9a, type: 2}
     - target: {fileID: 6403589542611230642, guid: b39987008f3700442ac678ba398faa9f,
         type: 3}
       propertyPath: m_Name

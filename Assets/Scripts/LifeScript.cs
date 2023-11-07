@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using EventArgs;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LifeScript : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class LifeScript : MonoBehaviour
     
     public delegate bool CanInflictDamageDelegate(GameObject attacker, int damage);
     public CanInflictDamageDelegate canInflictDamageDelegate;
+    
+    public ChestOpenEvent onDead = new();
     
 
     public GameObject healingPrefab;
@@ -43,6 +46,11 @@ public class LifeScript : MonoBehaviour
                 damage = damage,
                 attacker = attacker
             });
+        }
+
+        if (IsDead())
+        {
+            onDead?.Invoke(gameObject);
         }
     }
     
@@ -94,6 +102,8 @@ public class LifeScript : MonoBehaviour
     {
         return health <= 0;
     }
+    
+    [Serializable] public class ChestOpenEvent: UnityEvent<GameObject>{}
 
 
 }

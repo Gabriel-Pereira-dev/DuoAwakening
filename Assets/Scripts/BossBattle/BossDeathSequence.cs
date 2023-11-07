@@ -15,7 +15,7 @@ namespace BossBattle
         public void SwitchToTitleScreen()
         {
             FadeOutMusic();
-            SceneManager .LoadScene("TitleScene");
+            SceneManager.LoadScene("CreditsScene");
         }
     }
 }

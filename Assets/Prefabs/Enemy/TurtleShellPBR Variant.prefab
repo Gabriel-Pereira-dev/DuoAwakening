@@ -66,6 +66,11 @@ PrefabInstance:
       propertyPath: destroyIfFar
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5660769652331535877, guid: 38efdaadbfe1d624bbee439cb02e7661,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

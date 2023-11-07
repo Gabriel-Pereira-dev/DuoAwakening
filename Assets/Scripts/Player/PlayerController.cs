@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         hasJumpInput = Input.GetKey(KeyCode.Space);
 
         // Check defense input
-        hasDefenseInput = Input.GetKey(KeyCode.X);
+        hasDefenseInput = Input.GetMouseButton(1);
 
         //P Passar a velocidade de 0 a 1 pro Animator Controller
         float velocity = thisRigidbody.velocity.magnitude;
@@ -291,7 +291,7 @@ public class PlayerController : MonoBehaviour
 
     public bool AttemptToAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetMouseButtonDown(0))
         {
             bool isAttacking = stateMachine.currentStateName == attackState.name;
             bool canAttack = !isAttacking || attackState.CanSwitchStages();

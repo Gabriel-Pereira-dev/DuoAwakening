@@ -12,13 +12,13 @@ namespace BossBattle.States
         public override void Enter()
         {
             base.Enter();
-            GameManager.Instance.boss.SetActive(false);
+            if(GameManager.Instance.boss != null) GameManager.Instance.boss.SetActive(false);
         }
 
         public override void Exit()
         {
             base.Exit();
-            GameManager.Instance.boss.SetActive(true);
+            if(GameManager.Instance.boss != null) GameManager.Instance.boss.SetActive(true);
         }
     }
 }

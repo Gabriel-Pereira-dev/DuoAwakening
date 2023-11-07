@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DefaultNamespace
 {
@@ -7,7 +8,8 @@ namespace DefaultNamespace
     {
         public Transform newCheckpoint;
         public float playerY = 0f;
-
+        
+        public UpdateCheckpointnEvent onDead = new();
         private void OnTriggerEnter(Collider other)
         {
             var otherGameobject = other.gameObject;
@@ -23,4 +25,6 @@ namespace DefaultNamespace
         }
 
     }
+    
+    [Serializable] public class UpdateCheckpointnEvent: UnityEvent<GameObject>{}
 }

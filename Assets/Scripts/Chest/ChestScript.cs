@@ -14,13 +14,14 @@ namespace Chest
         private Animator thisAnimator;
         public GameObject itemHolder;
         public Item.Item item;
+        public AudioSource thisAudioSource;
 
         public ChestOpenEvent onOpen = new();
         // Start is called before the first frame update
         void Awake()
         {
             thisAnimator = this.GetComponent<Animator>();
-
+            thisAudioSource = this.GetComponent<AudioSource>();
         }
 
         void Start()
@@ -73,6 +74,9 @@ namespace Chest
             // Update UI
             var gameplayUI = GameManager.Instance.gameplayUI;
             gameplayUI.AddObject(itemType);
+            
+            // Play Sound
+            thisAudioSource.PlayOneShot(thisAudioSource.clip);
         }
         
         [Serializable] public class ChestOpenEvent: UnityEvent<GameObject>{}

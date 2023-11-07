@@ -91,7 +91,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        bossBattleHandler.Update();
+        if(bossBattleHandler != null){
+            bossBattleHandler.Update();
+        }
     }
 
 

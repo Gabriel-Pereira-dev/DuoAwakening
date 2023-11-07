@@ -12,11 +12,12 @@ namespace Door
         public Item.Item requiredKey;
         private bool isOpen;
         private Animator thisAnimator;
+        public AudioSource thisAudioSource;
         // Start is called before the first frame update
         void Awake()
         {
             thisAnimator = this.GetComponent<Animator>();
-
+            thisAudioSource = this.GetComponent<AudioSource>();
         }
 
         void Start()
@@ -100,7 +101,8 @@ namespace Door
             var gameplayUI = GameManager.Instance.gameplayUI;
             gameplayUI.RemoveObject(requiredKey.itemType);
             
-
+            // Play Sound
+            thisAudioSource.PlayOneShot(thisAudioSource.clip);
         }
 
         private void CloseDoor()
